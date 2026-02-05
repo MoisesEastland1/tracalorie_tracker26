@@ -1,11 +1,12 @@
 class CalorieTracker {
   constructor() {
-    this._calorieLimit = 2000;
+    this._calorieLimit = 3000;
     this._totalCalories = 0;
     this._meals = [];
     this._workouts = [];
 
     this._displayCaloriesTotal();
+    this._displayCaloriesLimit()
   }
 
   //Public Methods
@@ -25,6 +26,11 @@ class CalorieTracker {
   _displayCaloriesTotal(){
     const totalCaloriesEl = document.getElementById('calories-total');
     totalCaloriesEl.innerHTML = this._totalCalories;
+  }
+
+  _displayCaloriesLimit(){
+    const calorieLimitEl = document.getElementById('calories-limit');
+    calorieLimitEl.innerHTML = this._calorieLimit;
   }
 
   _render() {
