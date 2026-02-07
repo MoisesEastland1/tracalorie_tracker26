@@ -105,24 +105,64 @@ class Workout {
 }//this is the end of Workout class
 
 //init tracker
-const tracker = new CalorieTracker();
+class App {
+  constructor() {
+    this._tracker = new CalorieTracker();
 
-const breakfast = new Meal('Breakfast', 400);
-tracker.addMeal(breakfast);
+    document.getElementById('meal-form').addEventListener('submit', this._newMeal.bind(this));
 
-const lunch = new Meal('Lunch', 1500);
-tracker.addMeal(lunch);
+    document.getElementById('workout-form').addEventListener('submit', this._newWorkout.bind(this));
+  }
 
+  _newMeal(e) {
+    e.preventDefault();
 
+    const name = document.getElementById('meal-name');
+    const calories = document.getElementById('meal-calories');
 
-const lift = new Workout('Lift Weights', 100);
-tracker.addWorkout(lift);
+    //Validate Inputs
+    if(name.value === '' || calories.value === '') {
+      alert('Please fill in all fields');
+      return;
+    }
 
-const lift2 = new Workout('Squats', 100);
-tracker.addWorkout(lift2);
+    const meal = new Meal(name.value, +calories.value);
 
-console.log(tracker._meals);
-console.log(tracker._workouts);
-console.log(tracker._totalCalories);
+    this._tracker.addMeal(meal);
 
+    name.value = '';
+    calories.value = '';
 
+    const collapseMeal = document.getElementById('collapse-meal');
+    const bsCollapse = new bootstrap.Collapse(collapseMeal, {
+      toggle: true
+    });
+  }
+
+  _newWorkout(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('workout-name');
+    const calories = document.getElementById('workout-calories');
+
+    //Validate Inputs
+    if(name.value === '' || calories.value === '') {
+      alert('Please fill in all fields');
+      return;
+    }
+
+    const workout = new Workout(name.value, +calories.value);
+
+    this._tracker.addWorkout(workout);
+
+    name.value = '';
+    calories.value = '';
+
+    const collapseWorkout = document.getElementById('collapse-workout');
+    const bsCollapse = new bootstrap.Collapse(collapseWorkout, {
+      toggle: true
+    });
+  }
+}//This is the end of App class
+
+const app = new App();
